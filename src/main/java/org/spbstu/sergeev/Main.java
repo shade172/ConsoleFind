@@ -5,15 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    File Directory;
-    boolean Subdirectory;
-    String FileName;
-
-    public Main(File Directory, boolean Subdirectory, String FileName) {
-        this.Directory = Directory;
-        this.Subdirectory = Subdirectory;
-        this.FileName = FileName;
-    }
 
     public static List<String> searchFile(File Directory, boolean Subdirectory, String FileName) {
         List<String> res = new ArrayList<>();
