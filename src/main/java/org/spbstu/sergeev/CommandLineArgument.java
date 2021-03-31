@@ -14,6 +14,7 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.File;
+import java.io.IOException;
 
 public class CommandLineArgument {
     @Option(name = "-d", metaVar = "Directory")
@@ -25,14 +26,15 @@ public class CommandLineArgument {
     @Argument(metaVar = "FileName", required = true)
     private String FileName;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new CommandLineArgument().launch(args);
     }
 
-    private void launch(String[] args) {
+    private void launch(String[] args) throws IOException {
         CmdLineParser parser = new CmdLineParser(this);
         try {
             parser.parseArgument(args);
+            if (Directory == null) throw new IllegalArgumentException("Directory does not exist");
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
             return;

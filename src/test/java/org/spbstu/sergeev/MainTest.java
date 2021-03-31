@@ -17,17 +17,17 @@ class MainTest {
         List<String> expectedThree = new ArrayList<>();
 
         expected.add("." + File.separator + "Directory" + File.separator + "File.txt");
-        List<String> actual = Main.searchFile(new File("." + File.separator + "Directory"),
+        List<String> actual = Main.searchFile(new File("./Directory"),
                 false, "File.txt");
         assertEquals(expected, actual);
 
         expectedTwo.add("." + File.separator + "Directory" + File.separator + "Directory1" + File.separator + "File1.txt");
-        List<String> actualTwo = Main.searchFile(new File("." + File.separator + "Directory" + File.separator + "Directory1"),
+        List<String> actualTwo = Main.searchFile(new File("./Directory/Directory1"),
                 true, "File1.txt");
         assertEquals(expectedTwo, actualTwo);
 
         expectedThree.add("." + File.separator + "Directory" + File.separator + "Directory1" + File.separator + "Directory2" + File.separator + "File2.txt");
-        List<String> actualThree = Main.searchFile(new File("." + File.separator + "Directory" + File.separator + "Directory1" + File.separator + "Directory2"),
+        List<String> actualThree = Main.searchFile(new File("./Directory/Directory1/Directory2"),
                 true, "File2.txt");
         assertEquals(expectedThree, actualThree);
 
