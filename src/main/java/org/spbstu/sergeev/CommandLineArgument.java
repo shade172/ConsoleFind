@@ -14,11 +14,11 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.File;
-import java.io.IOException;
 
 public class CommandLineArgument {
+
     @Option(name = "-d", metaVar = "Directory")
-    private File Directory = new File(".");
+    private String Path;
 
     @Option(name = "-r", metaVar = "Subdirectory")
     private boolean Subdirectory;
@@ -26,19 +26,24 @@ public class CommandLineArgument {
     @Argument(metaVar = "FileName", required = true)
     private String FileName;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         new CommandLineArgument().launch(args);
     }
 
-    private void launch(String[] args) throws IOException {
+    private void launch(String[] args) {
         CmdLineParser parser = new CmdLineParser(this);
         try {
             parser.parseArgument(args);
-            if (Directory == null) throw new IllegalArgumentException("Directory does not exist");
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
             return;
         }
-        System.out.println(Main.searchFile(Directory, Subdirectory, FileName));
+        File Directory;
+        if (Path == null) {
+            Directory = new File("D:\\ConsoleFind");
+        } else {
+            Directory = new File(Path);
+        }
+        System.out.println((Main.searchFile(Directory, Subdirectory, FileName)).toString());
     }
 }

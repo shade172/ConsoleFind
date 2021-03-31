@@ -20,7 +20,7 @@ public class Main {
             }
             if (Subdirectory) {
                 for (String file : allFiles) {
-                    File searchF = new File(Directory.getPath() + file);
+                    File searchF = new File(Directory.getPath() + File.separator + file);
                     if (searchF.isDirectory()) {
                             res.addAll(searchFile(new File(Directory.getPath(), file), true, FileName));
                     }
