@@ -13,18 +13,19 @@ import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class CommandLineArgument {
 
     @Option(name = "-d", metaVar = "Directory")
-    private String Path;
+    private Path path = Paths.get(".");
 
-    @Option(name = "-r", metaVar = "Subdirectory")
-    private boolean Subdirectory;
+    @Option(name = "-r", metaVar = "SubDirectory")
+    private boolean subDirectory;
 
     @Argument(metaVar = "FileName", required = true)
-    private String FileName;
+    private String fileName;
 
     public static void main(String[] args) {
         new CommandLineArgument().launch(args);
@@ -38,12 +39,12 @@ public class CommandLineArgument {
             System.err.println(e.getMessage());
             return;
         }
-        File Directory;
-        if (Path == null) {
-            Directory = new File("D:\\ConsoleFind");
+        Path directory;
+        if (path == null) {
+            directory = Paths.get("D:\\ConsoleFind", "Directory");
         } else {
-            Directory = new File(Path);
+            directory = Paths.get(String.valueOf(path));
         }
-        System.out.println((Main.searchFile(Directory, Subdirectory, FileName)).toString());
+        System.out.println((Main.searchFile(directory, subDirectory, fileName)).toString());
     }
 }

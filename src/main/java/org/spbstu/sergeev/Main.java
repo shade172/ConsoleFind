@@ -1,29 +1,29 @@
 package org.spbstu.sergeev;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    public static List<String> searchFile(File Directory, boolean Subdirectory, String FileName) {
+    public static List<String> searchFile(Path directory, boolean subdirectory, String fileName) {
         List<String> res = new ArrayList<>();
-        String[] allFiles = Directory.list();
+        File mainDirectory = directory.toFile();
+        File[] allFiles = mainDirectory.listFiles();
         if (allFiles == null) {
-            throw new IllegalArgumentException("Directory does not exist");
+            throw new IllegalArgumentException("Directory is empty");
         }
-        if (allFiles != null) {
-            for (String file : allFiles) {
-                if (FileName.equals(file)) {
-                    res.add(Directory.getPath() + File.separator + FileName);
-                }
+        for (File file : allFiles) {
+            if (fileName.equals(file.getName())) {
+                res.add(String.valueOf(Paths.get(file.getPath())));
             }
-            if (Subdirectory) {
-                for (String file : allFiles) {
-                    File searchF = new File(Directory.getPath() + File.separator + file);
-                    if (searchF.isDirectory()) {
-                            res.addAll(searchFile(new File(Directory.getPath(), file), true, FileName));
-                    }
+        }
+        if (subdirectory) {
+            for (File file : allFiles) {
+                if (file.isDirectory()) {
+                        res.addAll(searchFile(Paths.get(file.getPath()), true, fileName));
                 }
             }
         }
